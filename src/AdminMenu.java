@@ -2,7 +2,6 @@ import api.AdminResource;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
-import service.ReservationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class AdminMenu {
                     break;
                 default:
             }
-        } while (adminChoice != "6");
+        } while (!adminChoice.equals("6"));
 
     }
 
@@ -70,29 +69,15 @@ public class AdminMenu {
         String roomNumber;
         Double price;
         RoomType roomType;
-        List<IRoom> newRooms = new ArrayList<IRoom>();
-        boolean isDuplicateRoom = false;
+        List<IRoom> newRooms = new ArrayList<>();
         boolean isAddMore = false;
 
         do {
-            roomNumber = getRoomNumber("\nEnter room number:");
+            roomNumber = getRoomNumber("\nEnter room number:", newRooms);
             price = getPrice("Enter price per night:");
             roomType = getRoomType("Enter room type: (1 for single bed, 2 for double bed)");
 
-            newRoom = new Room(roomNumber, price, roomType);
-
-            for (IRoom room : newRooms) {
-                if (room.getRoomNumber().equals(roomNumber)) {
-                    isDuplicateRoom = true;
-                    break;
-                }
-            }
-
-            if (!isDuplicateRoom) {
-                newRooms.add(newRoom);
-            }
-
-            String answer = "";
+            String answer;
 
             do {
                 System.out.println("Would you like to add another room? Y/N");
@@ -103,10 +88,13 @@ public class AdminMenu {
             } while (!answer.equalsIgnoreCase("Y") && !answer.equalsIgnoreCase("N"));
         } while (isAddMore);
 
+        newRoom = new Room(roomNumber, price, roomType);
+        newRooms.add(newRoom);
+
         AdminResource.addRoom(newRooms);
     }
 
-    public String getRoomNumber(String message) {
+    public String getRoomNumber(String message, List<IRoom> rooms) {
 
         String roomId;
         boolean isValidRoomNumber = false;
@@ -114,12 +102,51 @@ public class AdminMenu {
         do {
             System.out.println(message);
             roomId = sc.nextLine();
-            if (validateDataType("roomNumber", roomId)) {
+            if (validateRoomNumberInput(roomId, rooms)) {
                 isValidRoomNumber = true;
             }
         } while (!isValidRoomNumber);
 
         return roomId;
+    }
+
+    public boolean validateRoomNumberInput(String inputString, List<IRoom> newRooms) {
+        if (inputString == null) {
+            return false;
+        }
+
+        inputString = inputString.replace("\\s", "");
+
+        Integer r;
+
+        try {
+            r = Integer.parseInt(inputString);
+        } catch (NumberFormatException e) {
+            System.out.println("Not a valid room number.\n");
+            return false;
+        }
+
+        if (r <= 0) {
+            System.out.println("Room number must be a positive number.");
+            return false;
+        }
+
+        List<IRoom> allHotelRooms = new ArrayList<>(AdminResource.getAllRooms());
+
+        for (IRoom room : allHotelRooms) {
+            if (room.getRoomNumber().equals(inputString)) {
+                System.out.println("Room number already exists.");
+                return false;
+            }
+        }
+
+        for (IRoom newRoom : newRooms) {
+            if (newRoom.getRoomNumber().equals(inputString)) {
+                System.out.println("You've just added this room.");
+                return false;
+            }
+        }
+        return true;
     }
 
     public Double getPrice(String message) {
@@ -130,7 +157,7 @@ public class AdminMenu {
         do {
             System.out.println(message);
             String input = sc.nextLine();
-            if (validateDataType("roomPrice", input)) {
+            if (validateRoomPriceInput(input)) {
                 roomPrice = Double.parseDouble(input);
                 isValidPrice = true;
             }
@@ -139,13 +166,40 @@ public class AdminMenu {
         return roomPrice;
     }
 
+    public boolean validateRoomPriceInput(String inputString) {
+        if (inputString == null) {
+            return false;
+        }
+
+        inputString = inputString.replace("\\s", "");
+
+
+        Double d;
+
+        try {
+            d = Double.parseDouble(inputString);
+        } catch (NumberFormatException e) {
+            System.out.println("Not a valid price.\n");
+            return false;
+        }
+
+        if (d < 0) {
+            System.out.println("Price must be greater than or equal to 0.\n");
+            return false;
+        }
+
+
+        return true;
+
+    }
+
     public RoomType getRoomType(String message) {
 
         while (true) {
             System.out.println(message);
             String input = sc.nextLine();
 //            System.out.println("Room Type entered: " + input.getClass().getSimpleName());
-            if (validateDataType("roomType", input)) {
+            if (validateRoomTypeInput(input)) {
                 if (input.equals("1")) {
                     return RoomType.SINGLE;
                 }
@@ -156,60 +210,18 @@ public class AdminMenu {
         }
     }
 
-    public boolean validateDataType(String type, String inputString) {
+    public boolean validateRoomTypeInput(String inputString) {
         if (inputString == null) {
             return false;
         }
 
         inputString = inputString.replace("\\s", "");
 
-        if (type == "roomType") {
-            if (!inputString.equals("1") && !inputString.equals("2")) {
-                System.out.println("Not a valid room option.");
-                return false;
-            }
+        if (!inputString.equals("1") && !inputString.equals("2")) {
+            System.out.println("Not a valid room option.");
+            return false;
         }
 
-        if (type == "roomNumber") {
-            Integer r;
-            try {
-                r = Integer.parseInt(inputString);
-            } catch (NumberFormatException e) {
-                System.out.println("Not a valid room number.\n");
-                return false;
-            }
-
-            if (r <= 0) {
-                System.out.println("Room number must be a positive number.");
-                return false;
-            }
-
-            List<IRoom> allHotelRooms = new ArrayList<>(AdminResource.getAllRooms());
-            for (IRoom room : allHotelRooms) {
-                if (room.getRoomNumber().equals(inputString)) {
-                    System.out.println("Room number already exists.");
-                    break;
-                }
-            }
-
-            if (type == "roomPrice") {
-                Double d;
-
-                try {
-                    d = Double.parseDouble(inputString);
-                } catch (NumberFormatException e) {
-                    System.out.println("Not a valid price.\n");
-                    return false;
-                }
-
-                if (d < 0) {
-                    System.out.println("Price must be greater than or equal to 0.\n");
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
+        return true;
     }
 }
