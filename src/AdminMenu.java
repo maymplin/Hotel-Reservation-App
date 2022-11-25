@@ -24,8 +24,6 @@ public class AdminMenu {
             if (sc.hasNext()) {
                 adminChoice = sc.nextLine();
                 adminChoice = adminChoice.replaceAll("\\s", "");
-
-//                System.out.println("|" + adminChoice + "|\n");
             }
             switch (adminChoice) {
                 case "1":
@@ -70,12 +68,16 @@ public class AdminMenu {
         Double price;
         RoomType roomType;
         List<IRoom> newRooms = new ArrayList<>();
-        boolean isAddMore = false;
+        boolean isAddMore = true;
 
-        do {
+        while (isAddMore) {
+            isAddMore = false;
             roomNumber = getRoomNumber("\nEnter room number:", newRooms);
             price = getPrice("Enter price per night:");
             roomType = getRoomType("Enter room type: (1 for single bed, 2 for double bed)");
+
+            newRoom = new Room(roomNumber, price, roomType);
+            newRooms.add(newRoom);
 
             String answer;
 
@@ -86,10 +88,7 @@ public class AdminMenu {
                     isAddMore = true;
                 }
             } while (!answer.equalsIgnoreCase("Y") && !answer.equalsIgnoreCase("N"));
-        } while (isAddMore);
-
-        newRoom = new Room(roomNumber, price, roomType);
-        newRooms.add(newRoom);
+        }
 
         AdminResource.addRoom(newRooms);
     }
