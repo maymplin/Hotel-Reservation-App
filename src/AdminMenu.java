@@ -1,7 +1,9 @@
 import api.AdminResource;
+import model.Customer;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
+import service.CustomerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class AdminMenu {
             }
             switch (adminChoice) {
                 case "1":
+                    printAllCustomers();
                     break;
                 case "2":
                     printAllRooms();
@@ -56,6 +59,16 @@ public class AdminMenu {
 
     public void printDivider() {
         System.out.println("---------------------------------------------");
+    }
+
+//    Option 1: See all customer ----------5-------------------------------------
+
+    public void printAllCustomers() {
+        List<Customer> allCustomers = new ArrayList<>(CustomerService.getAllCustomers());
+
+        for (Customer customer : allCustomers) {
+            System.out.println(customer);
+        }
     }
 
 //    Option 2: See all rooms --------------------------------------------------

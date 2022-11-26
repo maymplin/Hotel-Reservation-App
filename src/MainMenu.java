@@ -56,7 +56,7 @@ public class MainMenu {
                 default:
             }
 
-        } while (userChoice != "5");
+        } while (!userChoice.equals("5"));
 
         scanner.close();
     }
