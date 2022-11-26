@@ -72,11 +72,13 @@ public class MainMenu {
         Date checkIn = null;
         Date checkOut = null;
 
-        // Get check-in/checkout dates and print all available rooms
+        // Prompt for check-in/checkout dates and print all available rooms
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
         checkOut = getDate("Enter check-out date - mm/dd/yyyy. (E.g. 02/08/2020)");
 
         printAvailableRooms(checkIn, checkOut);
+
+        // Prompt for
 
 
 
@@ -121,9 +123,7 @@ public class MainMenu {
         System.out.println();
     }
 
-
-
-
+    // TODO implement reserve a room
 
 //    Option 3: Create an account ----------------------------------------------
 
