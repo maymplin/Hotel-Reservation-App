@@ -1,3 +1,6 @@
+import model.Customer;
+import service.CustomerService;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,20 +47,23 @@ public class MainMenu {
                 case "2":
                     break;
                 case "3":
-
+                    createAnAccount();
                     break;
                 case "4":
                     AdminMenu adminMenu = new AdminMenu();
                     adminMenu.enterAdminMenu();
                     break;
                 default:
-                    scanner.close();
             }
 
         } while (userChoice != "5");
+
+        scanner.close();
     }
 
 //    Option 1: Find and reserve a room ----------------------------------------
+
+    // TODO complete find and reserve a room functionality
 
     public void findAndReserveARoom() {
 
@@ -97,4 +103,40 @@ public class MainMenu {
 
         return date;
     }
+
+//    Option 3: Create an account ----------------------------------------------
+
+//    TODO debug email validation
+    public void createAnAccount() {
+
+        String email;
+        String firstName;
+        String lastName;
+
+        email = getAccountInput("Enter email (username@domain.com):");
+        firstName = getAccountInput("First name:");
+        lastName = getAccountInput("Last name:");
+
+        try {
+            CustomerService.addCustomer(email, firstName, lastName);
+        } catch (IllegalArgumentException ex) {
+            ex.getLocalizedMessage();
+        }
+
+        System.out.println();
+    }
+
+    public String getAccountInput(String msg) {
+
+        String userInput = null;
+
+        do {
+            System.out.println(msg);
+            userInput = scanner.nextLine();
+        } while(userInput == null);
+
+        return userInput;
+    }
 }
+
+

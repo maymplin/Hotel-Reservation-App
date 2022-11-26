@@ -18,7 +18,7 @@ public class Customer {
         validateEmail(email);
     }
 
-    // TODO double-check Customer.validateEmail is fits with project spec
+    // TODO double-check Customer.validateEmail fits with project spec
     public void validateEmail(String email) {
         if (!pattern.matcher(email).matches()) {
             throw new IllegalArgumentException("Error, invalid email");
