@@ -29,19 +29,17 @@ public class AdminMenu {
                 case "1":
                     break;
                 case "2":
-                    displayAllRooms();
+                    printAllRooms();
                     break;
                 case "3":
                     break;
                 case "4":
                     addARoom();
                     break;
-                case "5":
-                    break;
-                default:
             }
-        } while (!adminChoice.equals("6"));
+        } while (!adminChoice.equals("5"));
 
+        System.out.println();
     }
 
     public void printAdminMenu() {
@@ -60,9 +58,9 @@ public class AdminMenu {
         System.out.println("---------------------------------------------");
     }
 
-//    Option 2: See all rooms
+//    Option 2: See all rooms --------------------------------------------------
 
-    public void displayAllRooms() {
+    public void printAllRooms() {
         AdminResource adminResource = new AdminResource();
         List<IRoom> allRooms = new ArrayList<>(adminResource.getAllRooms());
 
@@ -72,7 +70,7 @@ public class AdminMenu {
     }
 
 
-//    Option 4: Add a Room
+//    Option 4: Add a Room -----------------------------------------------------
 
     public void addARoom() {
 
@@ -186,7 +184,6 @@ public class AdminMenu {
 
         inputString = inputString.replace("\\s", "");
 
-
         Double d;
 
         try {
@@ -201,9 +198,7 @@ public class AdminMenu {
             return false;
         }
 
-
         return true;
-
     }
 
     public RoomType getRoomType(String message) {
@@ -211,7 +206,7 @@ public class AdminMenu {
         while (true) {
             System.out.println(message);
             String input = sc.nextLine();
-//            System.out.println("Room Type entered: " + input.getClass().getSimpleName());
+
             if (validateRoomTypeInput(input)) {
                 if (input.equals("1")) {
                     return RoomType.SINGLE;

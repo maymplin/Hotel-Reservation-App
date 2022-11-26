@@ -2,14 +2,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class MainMenu {
-
-//    private static final String dateRegex = "([0-9]{2})/([0-9]{2})/([0-9]{4)";
-//    private static final Pattern pattern = Pattern.compile(dateRegex);
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -49,6 +44,7 @@ public class MainMenu {
                 case "2":
                     break;
                 case "3":
+
                     break;
                 case "4":
                     AdminMenu adminMenu = new AdminMenu();
@@ -61,6 +57,8 @@ public class MainMenu {
         } while (userChoice != "5");
     }
 
+//    Option 1: Find and reserve a room ----------------------------------------
+
     public void findAndReserveARoom() {
 
         final Scanner s = new Scanner(System.in);
@@ -72,14 +70,11 @@ public class MainMenu {
         checkIn = getDate("Enter checkIn Date mm/dd/yyyy. (E.g. 02/01/2020)");
         checkOut = getDate("Enter checkOut Date mm/dd/yyyy. (E.g. 02/08/2020)");
         System.out.println(checkOut);
-
     }
 
     public Date parseDateString(String inputDate) throws ParseException {
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-//        return pattern.matcher(inputDate).matches();
 
         return sdf.parse(inputDate);
     }
