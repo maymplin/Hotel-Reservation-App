@@ -11,9 +11,6 @@ import java.util.Date;
 
 public class HotelResource {
 
-    // TODO create HotelResource constructor
-
-
     public HotelResource() {
     }
 
@@ -43,7 +40,7 @@ public class HotelResource {
         return ReservationService.getCustomerReservation(getCustomer(customerEmail));
     }
 
-    public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
+    public static Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
         return ReservationService.findRooms(checkIn, checkOut);
     }
 }

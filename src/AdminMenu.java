@@ -85,6 +85,8 @@ public class AdminMenu {
         for (IRoom room : allRooms) {
             System.out.println(room);
         }
+
+        System.out.println();
     }
 
 
