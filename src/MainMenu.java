@@ -1,7 +1,5 @@
-import model.Customer;
-import service.CustomerService;
+import api.HotelResource;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,7 +116,7 @@ public class MainMenu {
         lastName = getAccountInput("Last name:");
 
         try {
-            CustomerService.addCustomer(email, firstName, lastName);
+            HotelResource.createACustomer(email, firstName, lastName);
         } catch (IllegalArgumentException ex) {
             ex.getLocalizedMessage();
         }
