@@ -3,7 +3,6 @@ import model.Customer;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
-import service.CustomerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +60,17 @@ public class AdminMenu {
         System.out.println("---------------------------------------------");
     }
 
-//    Option 1: See all customer ----------5-------------------------------------
+//    Option 1: See all customers ----------------------------------------------
 
     public void printAllCustomers() {
-        List<Customer> allCustomers = new ArrayList<>(CustomerService.getAllCustomers());
+        List<Customer> allCustomers = new ArrayList<>(AdminResource.getCustomers());
 
-        for (Customer customer : allCustomers) {
-            System.out.println(customer);
+        if (allCustomers.isEmpty()) {
+            System.out.println("There are no registered customers.");
+        } else {
+            for (Customer customer : allCustomers) {
+                System.out.println(customer);
+            }
         }
     }
 

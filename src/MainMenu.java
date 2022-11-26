@@ -115,11 +115,7 @@ public class MainMenu {
         firstName = getAccountInput("First name:");
         lastName = getAccountInput("Last name:");
 
-        try {
-            HotelResource.createACustomer(email, firstName, lastName);
-        } catch (IllegalArgumentException ex) {
-            ex.getLocalizedMessage();
-        }
+        HotelResource.createACustomer(email, firstName, lastName);
 
         System.out.println();
     }

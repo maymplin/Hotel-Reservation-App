@@ -14,7 +14,7 @@ public class AdminResource {
     public AdminResource() {
     }
 
-    public Customer getCustomer(String email) {
+    public static Customer getCustomer(String email) {
         return CustomerService.getCustomer(email);
     }
 
@@ -30,11 +30,11 @@ public class AdminResource {
         return allRooms;
     }
 
-    public Collection<Customer> getCustomers() {
+    public static Collection<Customer> getCustomers() {
         return CustomerService.getAllCustomers();
     }
 
-    public void displayAllReservations() {
+    public static void displayAllReservations() {
         ReservationService.printAllReservation();
     }
 }

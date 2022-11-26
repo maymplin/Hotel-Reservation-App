@@ -22,7 +22,12 @@ public class HotelResource {
     }
 
     public static void createACustomer(String email, String firstName, String lastName) {
-        CustomerService.addCustomer(email, firstName, lastName);
+        try {
+            System.out.println("= HotelResource = Inside CreateACustomer method try block");
+            CustomerService.addCustomer(email, firstName, lastName);
+        } catch (IllegalArgumentException ex) {
+            ex.getLocalizedMessage();
+        }
     }
 
     public IRoom getRoom(String roomNumber) {

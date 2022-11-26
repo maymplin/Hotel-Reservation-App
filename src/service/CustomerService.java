@@ -12,7 +12,7 @@ public class CustomerService {
     }
 
     public static void addCustomer(String email, String firstName, String lastName) {
-        Customer newCustomer = new Customer(email, firstName, lastName);
+        Customer newCustomer = new Customer(firstName, lastName, email);
         allCustomers.put(email, newCustomer);
     }
 
