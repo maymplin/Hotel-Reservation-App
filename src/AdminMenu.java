@@ -29,6 +29,7 @@ public class AdminMenu {
                 case "1":
                     break;
                 case "2":
+                    displayAllRooms();
                     break;
                 case "3":
                     break;
@@ -58,6 +59,18 @@ public class AdminMenu {
     public void printDivider() {
         System.out.println("---------------------------------------------");
     }
+
+//    Option 2: See all rooms
+
+    public void displayAllRooms() {
+        AdminResource adminResource = new AdminResource();
+        List<IRoom> allRooms = new ArrayList<>(adminResource.getAllRooms());
+
+        for (IRoom room : allRooms) {
+            System.out.println(room);
+        }
+    }
+
 
 //    Option 4: Add a Room
 
@@ -158,6 +171,7 @@ public class AdminMenu {
             String input = sc.nextLine();
             if (validateRoomPriceInput(input)) {
                 roomPrice = Double.parseDouble(input);
+                roomPrice = Math.round(roomPrice * 100.0) / 100.0;
                 isValidPrice = true;
             }
         } while (!isValidPrice);
