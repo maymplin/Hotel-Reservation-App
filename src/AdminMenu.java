@@ -72,6 +72,8 @@ public class AdminMenu {
                 System.out.println(customer);
             }
         }
+
+        System.out.println();
     }
 
 //    Option 2: See all rooms --------------------------------------------------

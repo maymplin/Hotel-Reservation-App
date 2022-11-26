@@ -53,8 +53,8 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "First Name: " + firstname + " " +
-                "Last Name: " + lastName + " " +
+        return "First Name: " + firstname + " / " +
+                "Last Name: " + lastName + " / " +
                 "Email: " + email;
     }
 }
