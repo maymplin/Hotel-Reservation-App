@@ -34,6 +34,7 @@ public class AdminMenu {
                     printAllRooms();
                     break;
                 case "3":
+                    printAllReservations();
                     break;
                 case "4":
                     addARoom();
@@ -79,8 +80,9 @@ public class AdminMenu {
 //    Option 2: See all rooms --------------------------------------------------
 
     public void printAllRooms() {
-        AdminResource adminResource = new AdminResource();
-        List<IRoom> allRooms = new ArrayList<>(adminResource.getAllRooms());
+//        AdminResource adminResource = new AdminResource();
+//        List<IRoom> allRooms = new ArrayList<>(adminResource.getAllRooms());
+        List<IRoom> allRooms = new ArrayList<>(AdminResource.getAllRooms());
 
         for (IRoom room : allRooms) {
             System.out.println(room);
@@ -89,6 +91,11 @@ public class AdminMenu {
         System.out.println();
     }
 
+//    Option 3: See all reservations -------------------------------------------
+
+    public void printAllReservations() {
+        AdminResource.displayAllReservations();
+    }
 
 //    Option 4: Add a Room -----------------------------------------------------
 

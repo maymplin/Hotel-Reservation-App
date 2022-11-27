@@ -76,7 +76,11 @@ public class MainMenu {
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
         checkOut = getDate("Enter check-out date - mm/dd/yyyy. (E.g. 02/08/2020)");
 
-        printAvailableRooms(checkIn, checkOut);
+        if (checkOut.after(checkIn)) {
+            printAvailableRooms(checkIn, checkOut);
+        } else {
+            System.out.println("Check-out date must be after check-in date.");
+        }
 
         // Prompt for
 

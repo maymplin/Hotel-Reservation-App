@@ -51,8 +51,49 @@ public class HotelReservationApplication {
         rooms.forEach(ReservationService::addRoom);
 
         // Create reservations
-        ReservationService.reserveARoom(CustomerService.getCustomer("tseliot@fourquartets.com"), room101, new Date(2022,
-                Calendar.NOVEMBER, 26), new Date(2022, Calendar.NOVEMBER, 30));
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("tseliot@fourquartets.com"),
+                room101,
+                new Date(2022-1900, Calendar.NOVEMBER, 26),
+                new Date(2022-1900, Calendar.NOVEMBER, 30)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("tseliot@fourquartets.com"),
+                room202,
+                new Date(2023-1900, Calendar.JANUARY, 6),
+                new Date(2023-1900, Calendar.JANUARY, 10)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("esatie@gymnopedies.com"),
+                room102,
+                new Date(2022-1900, Calendar.DECEMBER, 27),
+                new Date(2023-1900, Calendar.JANUARY, 5)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("brussell@logic.com"),
+                room103,
+                new Date(2022-1900, Calendar.DECEMBER, 15),
+                new Date(2022-1900, Calendar.DECEMBER, 19)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("mcurie@radiation.com"),
+                room201,
+                new Date(2022-1900, Calendar.NOVEMBER, 29),
+                new Date(2022-1900, Calendar.DECEMBER, 7)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("jlocke@empiricism.com"),
+                room202,
+                new Date(2022-1900, Calendar.DECEMBER, 31),
+                new Date(2023-1900, Calendar.JANUARY, 3)
+        );
+        ReservationService.reserveARoom(
+                CustomerService.getCustomer("ghhardy@maths.com"),
+                room203,
+                new Date(2022-1900, Calendar.DECEMBER, 3),
+                new Date(2022-1900, Calendar.DECEMBER, 16)
+        );
+
 
 //        Reservation thomas101 = new Reservation(thomas, room101, new Date(2022, 11, 26), new Date(2022, 11, 30));
 //        Reservation erik102 = new Reservation(erik, room102, new Date(2022, 12, 27), new Date(2023, 1, 5));
