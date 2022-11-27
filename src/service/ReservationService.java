@@ -46,6 +46,7 @@ public class ReservationService {
             if (!allReservations.containsKey(roomId)) {
                 allReservations.put(roomId, new ArrayList());
             }
+
             allReservations.get(roomId).add(newReservation);
             sortReservations(allReservations.get(roomId));
 

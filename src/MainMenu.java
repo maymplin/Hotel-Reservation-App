@@ -1,8 +1,11 @@
 import api.HotelResource;
+import model.IRoom;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -48,8 +51,7 @@ public class MainMenu {
                     createAnAccount();
                     break;
                 case "4":
-                    AdminMenu adminMenu = new AdminMenu();
-                    adminMenu.enterAdminMenu();
+                    getAdminMenu();
                     break;
                 default:
             }
@@ -67,13 +69,23 @@ public class MainMenu {
 
         final Scanner s = new Scanner(System.in);
 
-        Boolean isValidInput = false;
         Date checkIn = null;
         Date checkOut = null;
 
-        checkIn = getDate("Enter checkIn Date mm/dd/yyyy. (E.g. 02/01/2020)");
-        checkOut = getDate("Enter checkOut Date mm/dd/yyyy. (E.g. 02/08/2020)");
-        System.out.println(checkOut);
+        // Prompt for check-in/checkout dates and print all available rooms
+        checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
+        checkOut = getDate("Enter check-out date - mm/dd/yyyy. (E.g. 02/08/2020)");
+
+        if (checkOut.after(checkIn)) {
+            printAvailableRooms(checkIn, checkOut);
+        } else {
+            System.out.println("Check-out date must be after check-in date.");
+        }
+
+        // Prompt for
+
+
+
     }
 
     public Date parseDateString(String inputDate) throws ParseException {
@@ -102,9 +114,23 @@ public class MainMenu {
         return date;
     }
 
+    // Find available rooms based on check-in/check-out dates
+
+    public void printAvailableRooms(Date in, Date out) {
+
+        List<IRoom> availableRooms = new ArrayList<>(HotelResource.findARoom(in, out));
+
+        for (IRoom room : availableRooms) {
+            System.out.println(room);
+        }
+
+        System.out.println();
+    }
+
+    // TODO implement reserve a room
+
 //    Option 3: Create an account ----------------------------------------------
 
-//    TODO debug email validation
     public void createAnAccount() {
 
         String email;
@@ -131,6 +157,14 @@ public class MainMenu {
 
         return userInput;
     }
+
+//    Option 4: Admin ----------------------------------------------------------
+
+    public void getAdminMenu() {
+        AdminMenu adminMenu = new AdminMenu();
+        adminMenu.enterAdminMenu();
+    }
+
 }
 
 
