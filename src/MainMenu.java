@@ -1,4 +1,6 @@
+import api.AdminResource;
 import api.HotelResource;
+import model.Customer;
 import model.IRoom;
 
 import java.text.ParseException;
@@ -46,6 +48,7 @@ public class MainMenu {
                     findAndReserveARoom();
                     break;
                 case "2":
+                    printCustomerReservations();
                     break;
                 case "3":
                     createAnAccount();
@@ -129,6 +132,13 @@ public class MainMenu {
 
     // TODO implement reserve a room
 
+//    Option 2: See my reservations --------------------------------------------
+
+    public void printCustomerReservations() {
+
+
+    }
+
 //    Option 3: Create an account ----------------------------------------------
 
     public void createAnAccount() {
@@ -140,7 +150,6 @@ public class MainMenu {
         email = getAccountInput("Enter email (username@domain.com):");
         firstName = getAccountInput("First name:");
         lastName = getAccountInput("Last name:");
-
         HotelResource.createACustomer(email, firstName, lastName);
 
         System.out.println();

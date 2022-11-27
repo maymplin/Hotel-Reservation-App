@@ -12,13 +12,17 @@ public class CustomerService {
     }
 
     public static void addCustomer(String email, String firstName, String lastName) {
-        Customer newCustomer = new Customer(firstName, lastName, email);
-        allCustomers.put(email, newCustomer);
+        if (allCustomers.containsKey(email)) {
+            throw new IllegalArgumentException("This account already exists.");
+        } else {
+            Customer newCustomer = new Customer(firstName, lastName, email);
+            allCustomers.put(email, newCustomer);
+        }
     }
 
     // TODO refactor CustomerService.getCustomer
     public static Customer getCustomer(String customerEmail) {
-        if (customerEmail != null && customerEmail != "") {
+        if (customerEmail != null && customerEmail.equals("")) {
             return allCustomers.get(customerEmail);
         }
 
