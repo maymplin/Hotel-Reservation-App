@@ -1,5 +1,4 @@
 import api.HotelResource;
-import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
@@ -64,26 +63,22 @@ public class MainMenu {
         Date checkIn;
         Date checkOut;
 
+        List<IRoom> availableRooms = new ArrayList<>();
+
         // Prompt for check-in/checkout dates and print all available rooms
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
         checkOut = getDate("Enter check-out date - mm/dd/yyyy. (E.g. 02/08/2020)");
 
-        if (checkOut.after(checkIn)) {
-            printAvailableRooms(checkIn, checkOut);
-        } else {
+        if (!validateCheckInCheckOut(checkIn, checkOut)) {
             System.out.println("Check-out date must be after check-in date.");
         }
+
+        availableRooms = checkAvailableRooms(checkIn, checkOut);
+
 
         // Prompt for
 
         System.out.println();
-    }
-
-    public Date parseDateString(String inputDate) throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-        return sdf.parse(inputDate);
     }
 
     public Date getDate(String message) {
@@ -105,21 +100,34 @@ public class MainMenu {
         return date;
     }
 
+    public Date parseDateString(String inputDate) throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        return sdf.parse(inputDate);
+    }
+
+    public boolean validateCheckInCheckOut(Date dateIn, Date dateOut) {
+        return dateOut.after(dateIn);
+    }
+
+
     // Find available rooms based on check-in/check-out dates
 
-    public void printAvailableRooms(Date in, Date out) {
+    public List<IRoom> checkAvailableRooms(Date in, Date out) {
 
         List<IRoom> availableRooms = new ArrayList<>(HotelResource.findARoom(in, out));
 
         if (availableRooms.isEmpty()) {
             System.out.println("There are no rooms available for those dates.");
-
         }
         for (IRoom room : availableRooms) {
             System.out.println(room);
         }
 
         System.out.println();
+
+        return availableRooms;
     }
 
     // TODO implement reserve a room
