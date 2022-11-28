@@ -76,8 +76,7 @@ public class MainMenu {
 
         // Prompt for
 
-
-
+        System.out.println();
     }
 
     public Date parseDateString(String inputDate) throws ParseException {
@@ -112,6 +111,10 @@ public class MainMenu {
 
         List<IRoom> availableRooms = new ArrayList<>(HotelResource.findARoom(in, out));
 
+        if (availableRooms.isEmpty()) {
+            System.out.println("There are no rooms available for those dates.");
+
+        }
         for (IRoom room : availableRooms) {
             System.out.println(room);
         }
@@ -168,7 +171,13 @@ public class MainMenu {
         do {
             System.out.println(msg);
             userInput = scanner.nextLine();
-        } while(userInput == null);
+
+            if (userInput != null && !userInput.isEmpty()) {
+                break;
+            } else {
+                System.out.println("This field cannot be empty.");
+            }
+        } while(true);
 
         return userInput;
     }
