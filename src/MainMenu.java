@@ -1,3 +1,4 @@
+import api.AdminResource;
 import api.HotelResource;
 import model.IRoom;
 import model.Reservation;
@@ -80,11 +81,50 @@ public class MainMenu {
 
         if (!availableRooms.isEmpty()) {
             printAvailableRooms(availableRooms);
+            reserveARoom(availableRooms);
 
         }
 
         System.out.println();
     }
+
+    public void reserveARoom(List<IRoom> available) {
+
+        String bookRoom;
+
+        do {
+            System.out.println("Would you like to book a room? Y/N");
+            bookRoom = scanner.nextLine();
+        } while (bookRoom == null || (bookRoom.equalsIgnoreCase("Y") &&
+                bookRoom.equalsIgnoreCase("N")));
+
+        if (bookRoom.equalsIgnoreCase("Y")) {
+            String customerEmail = checkAccount();
+
+
+        }
+    }
+
+    public String checkAccount() {
+        do {
+            System.out.println("Do you have an account with us? Y/N");
+            String hasAccount = scanner.nextLine();
+
+            if (hasAccount.equalsIgnoreCase("Y")) {
+                System.out.println("Enter email: (Format: username@domain.com)");
+                String accountEmail = scanner.nextLine();
+                if (AdminResource.getCustomer(accountEmail) != null) {
+                    return accountEmail;
+                } else {
+                    System.out.println("That account is not in our system.\n");
+                }
+            } else if (hasAccount.equalsIgnoreCase("N")) {
+                System.out.println("Please return to Main Menu and create an account first.");
+                return "";
+            }
+        } while (true);
+    }
+
 
     public Date getDate(String message) {
         String userInput;
@@ -124,6 +164,7 @@ public class MainMenu {
 
     public void printAvailableRooms(List<IRoom> availableRooms) {
         availableRooms.forEach(System.out::println);
+        System.out.println();
     }
 
     public String formatDateString(Date date) {
