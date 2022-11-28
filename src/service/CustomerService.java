@@ -22,7 +22,7 @@ public class CustomerService {
 
     // TODO refactor CustomerService.getCustomer
     public static Customer getCustomer(String customerEmail) {
-        if (customerEmail != null && customerEmail.equals("")) {
+        if (customerEmail != null && !customerEmail.equals("")) {
             return allCustomers.get(customerEmail);
         }
 

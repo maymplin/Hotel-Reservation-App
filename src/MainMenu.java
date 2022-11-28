@@ -1,7 +1,7 @@
-import api.AdminResource;
 import api.HotelResource;
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,19 +44,10 @@ public class MainMenu {
                 userChoice = scanner.nextLine();
 
             switch (userChoice) {
-                case "1":
-                    findAndReserveARoom();
-                    break;
-                case "2":
-                    printCustomerReservations();
-                    break;
-                case "3":
-                    createAnAccount();
-                    break;
-                case "4":
-                    getAdminMenu();
-                    break;
-                default:
+                case "1" -> findAndReserveARoom();
+                case "2" -> printCustomerReservations();
+                case "3" -> createAnAccount();
+                case "4" -> getAdminMenu();
             }
 
         } while (!userChoice.equals("5"));
@@ -70,10 +61,8 @@ public class MainMenu {
 
     public void findAndReserveARoom() {
 
-        final Scanner s = new Scanner(System.in);
-
-        Date checkIn = null;
-        Date checkOut = null;
+        Date checkIn;
+        Date checkOut;
 
         // Prompt for check-in/checkout dates and print all available rooms
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
@@ -136,7 +125,24 @@ public class MainMenu {
 
     public void printCustomerReservations() {
 
+        String customerEmail;
 
+        System.out.println("Please enter your account email:");
+        customerEmail = scanner.nextLine();
+
+        if (HotelResource.getCustomer(customerEmail) == null) {
+            System.out.println("You do not have an account with us.");
+        } else {
+            List<Reservation> reservations = new ArrayList<>(HotelResource.getCustomersReservations(customerEmail));
+
+            if (reservations.isEmpty()) {
+                System.out.println("You do not have any reservations with us.");
+            } else {
+                reservations.forEach(System.out::println);
+            }
+        }
+
+        System.out.println();
     }
 
 //    Option 3: Create an account ----------------------------------------------
@@ -157,7 +163,7 @@ public class MainMenu {
 
     public String getAccountInput(String msg) {
 
-        String userInput = null;
+        String userInput;
 
         do {
             System.out.println(msg);

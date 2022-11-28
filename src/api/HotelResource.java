@@ -14,7 +14,7 @@ public class HotelResource {
     public HotelResource() {
     }
 
-    public Customer getCustomer(String email) {
+    public static Customer getCustomer(String email) {
         return CustomerService.getCustomer(email);
     }
 
@@ -36,7 +36,7 @@ public class HotelResource {
         return ReservationService.reserveARoom(getCustomer(customerEmail), room, CheckInDate, CheckInDate);
     }
 
-    public Collection<Reservation> getCustomersReservations (String customerEmail) {
+    public static Collection<Reservation> getCustomersReservations (String customerEmail) {
         return ReservationService.getCustomerReservation(getCustomer(customerEmail));
     }
 
