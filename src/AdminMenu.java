@@ -27,18 +27,10 @@ public class AdminMenu {
                 adminChoice = adminChoice.replaceAll("\\s", "");
             }
             switch (adminChoice) {
-                case "1":
-                    printAllCustomers();
-                    break;
-                case "2":
-                    printAllRooms();
-                    break;
-                case "3":
-                    printAllReservations();
-                    break;
-                case "4":
-                    addARoom();
-                    break;
+                case "1" -> printAllCustomers();
+                case "2" -> printAllRooms();
+                case "3" -> printAllReservations();
+                case "4" -> addARoom();
             }
         } while (!adminChoice.equals("5"));
 
@@ -80,8 +72,6 @@ public class AdminMenu {
 //    Option 2: See all rooms --------------------------------------------------
 
     public void printAllRooms() {
-//        AdminResource adminResource = new AdminResource();
-//        List<IRoom> allRooms = new ArrayList<>(adminResource.getAllRooms());
         List<IRoom> allRooms = new ArrayList<>(AdminResource.getAllRooms());
 
         for (IRoom room : allRooms) {

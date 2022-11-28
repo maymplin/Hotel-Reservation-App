@@ -1,14 +1,10 @@
 import api.HotelResource;
-import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainMenu {
 
@@ -63,38 +59,41 @@ public class MainMenu {
 
         Date checkIn;
         Date checkOut;
+        final Integer DAYSOUT = 7;
+
+        List<IRoom> availableRooms;
 
         // Prompt for check-in/checkout dates and print all available rooms
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
         checkOut = getDate("Enter check-out date - mm/dd/yyyy. (E.g. 02/08/2020)");
 
-        if (checkOut.after(checkIn)) {
-            printAvailableRooms(checkIn, checkOut);
-        } else {
+        if (!validateCheckInCheckOut(checkIn, checkOut)) {
             System.out.println("Check-out date must be after check-in date.");
         }
 
-        // Prompt for
+        availableRooms = findAvailableRooms(checkIn, checkOut);
+
+        // If no available rooms for the specified dates,
+        if (availableRooms.isEmpty()) {
+            availableRooms = checkAlternateDates(checkIn, checkOut, DAYSOUT);
+        }
+
+        if (!availableRooms.isEmpty()) {
+            printAvailableRooms(availableRooms);
+
+        }
 
         System.out.println();
     }
 
-    public Date parseDateString(String inputDate) throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-        return sdf.parse(inputDate);
-    }
-
     public Date getDate(String message) {
-        Scanner s = new Scanner(System.in);
         String userInput;
 
         Date date = null;
 
         do {
             System.out.println(message);
-            userInput = s.nextLine();
+            userInput = scanner.nextLine();
             try {
                 date = parseDateString(userInput);
             } catch (ParseException ex) {
@@ -105,24 +104,58 @@ public class MainMenu {
         return date;
     }
 
-    // Find available rooms based on check-in/check-out dates
+    public Date parseDateString(String inputDate) throws ParseException {
 
-    public void printAvailableRooms(Date in, Date out) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-        List<IRoom> availableRooms = new ArrayList<>(HotelResource.findARoom(in, out));
-
-        if (availableRooms.isEmpty()) {
-            System.out.println("There are no rooms available for those dates.");
-
-        }
-        for (IRoom room : availableRooms) {
-            System.out.println(room);
-        }
-
-        System.out.println();
+        return sdf.parse(inputDate);
     }
 
-    // TODO implement reserve a room
+    // Verify that check-out date is after check-in date
+    public boolean validateCheckInCheckOut(Date dateIn, Date dateOut) {
+        return dateOut.after(dateIn);
+    }
+
+    // Find available rooms based on check-in/check-out dates
+    public List<IRoom> findAvailableRooms(Date in, Date out) {
+
+        return new ArrayList<>(HotelResource.findARoom(in, out));
+    }
+
+    public void printAvailableRooms(List<IRoom> availableRooms) {
+        availableRooms.forEach(System.out::println);
+    }
+
+    public String formatDateString(Date date) {
+        final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEE. MMM dd, yyyy");
+        return DATE_FORMAT.format(date);
+    }
+
+    public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
+        System.out.println("There are no rooms available for the specified dates.\n");
+        System.out.println("Checking for available rooms 7 days for your specified dates.");
+
+        dateIn = setNewDate(dateIn, daysToAdd);
+        dateOut = setNewDate(dateOut, daysToAdd);
+
+        List<IRoom> availableRooms = findAvailableRooms(dateIn, dateOut);
+
+        if (availableRooms.isEmpty()) {
+            System.out.println("Unfortunately there are no available rooms for these dates, either.");
+        } else {
+            System.out.println("\nNew check-in date: " + formatDateString(dateIn) +
+                    " / New check-out date: " + formatDateString(dateOut));
+        }
+
+        return availableRooms;
+    }
+
+    public Date setNewDate(Date date, Integer addDays) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, addDays);
+        return calendar.getTime();
+    }
 
 //    Option 2: See my reservations --------------------------------------------
 
