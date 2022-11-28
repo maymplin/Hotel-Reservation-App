@@ -25,9 +25,8 @@ public class AdminResource {
     }
 
     public static Collection<IRoom> getAllRooms() {
-        List<IRoom> allRooms = new ArrayList<>(ReservationService.getAllRooms().values());
 
-        return allRooms;
+        return new ArrayList<>(ReservationService.getAllRooms().values());
     }
 
     public static Collection<Customer> getCustomers() {
