@@ -27,11 +27,11 @@ public class HotelResource {
         }
     }
 
-    public IRoom getRoom(String roomNumber) {
+    public static IRoom getRoom(String roomNumber) {
         return ReservationService.getARoom(roomNumber);
     }
 
-    public Reservation bookARoom(String customerEmail, IRoom room,
+    public static Reservation bookARoom(String customerEmail, IRoom room,
                                  Date CheckInDate, Date CheckOutDate) {
         return ReservationService.reserveARoom(getCustomer(customerEmail), room, CheckInDate, CheckInDate);
     }

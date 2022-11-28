@@ -81,14 +81,17 @@ public class MainMenu {
 
         if (!availableRooms.isEmpty()) {
             printAvailableRooms(availableRooms);
-            reserveARoom(availableRooms);
+            Reservation newReservation = reserveARoom(availableRooms, checkIn, checkOut);
 
+            if (newReservation != null) {
+                System.out.println(newReservation);
+            }
         }
 
         System.out.println();
     }
 
-    public void reserveARoom(List<IRoom> available) {
+    public Reservation reserveARoom(List<IRoom> available, Date checkIn, Date checkOut) {
 
         String bookRoom;
 
@@ -101,8 +104,15 @@ public class MainMenu {
         if (bookRoom.equalsIgnoreCase("Y")) {
             String customerEmail = checkAccount();
 
-
+            if (!customerEmail.isEmpty()) {
+                String roomId = getRoomNumber(available);
+                if (!roomId.isEmpty()) {
+                    return HotelResource.bookARoom(customerEmail,
+                            HotelResource.getRoom(roomId), checkIn, checkOut);
+                }
+            }
         }
+        return null;
     }
 
     public String checkAccount() {
@@ -125,6 +135,37 @@ public class MainMenu {
         } while (true);
     }
 
+    public String getRoomNumber(List<IRoom> availableRooms) {
+        do {
+            System.out.println("Enter the room number that you would like to reserve: ");
+            String roomNumber = scanner.nextLine();
+
+            boolean isValidRoom = checkRoomAvailable(roomNumber, availableRooms);
+
+            if (!isValidRoom) {
+                System.out.println("The room number you entered is not available.\n");
+                System.out.println("Would you like to reserve another room? Y/N");
+                String reserveRoom = scanner.nextLine();
+
+                if (reserveRoom.equalsIgnoreCase("N")) {
+                    return "";
+                } else if (!reserveRoom.equalsIgnoreCase(("Y"))) {
+                    System.out.println("That is not a valid input.\n");
+                }
+            } else {
+                return roomNumber;
+            }
+        } while (true);
+    }
+
+    public boolean checkRoomAvailable(String roomId, List<IRoom> availableRooms) {
+        for (IRoom room : availableRooms) {
+            if (room.getRoomNumber().equals(roomId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public Date getDate(String message) {
         String userInput;

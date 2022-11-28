@@ -59,7 +59,7 @@ public class Reservation {
         String dateIn = DATE_FORMAT.format(checkInDate);
         String dateOut = DATE_FORMAT.format(checkOutDate);
         return "Reservation for - " + customer +
-                " | Room: " + room +
+                "\n" + room +
                 " | Check-in: " + dateIn +
                 " | Check-out: " + dateOut;
     }
