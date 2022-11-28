@@ -1,3 +1,4 @@
+import api.AdminResource;
 import api.HotelResource;
 import model.IRoom;
 import model.Reservation;
@@ -80,10 +81,90 @@ public class MainMenu {
 
         if (!availableRooms.isEmpty()) {
             printAvailableRooms(availableRooms);
+            Reservation newReservation = reserveARoom(availableRooms, checkIn, checkOut);
 
+            if (newReservation != null) {
+                System.out.println(newReservation);
+            }
         }
 
         System.out.println();
+    }
+
+    public Reservation reserveARoom(List<IRoom> available, Date checkIn, Date checkOut) {
+
+        String bookRoom;
+
+        do {
+            System.out.println("Would you like to book a room? Y/N");
+            bookRoom = scanner.nextLine();
+        } while (bookRoom == null || (bookRoom.equalsIgnoreCase("Y") &&
+                bookRoom.equalsIgnoreCase("N")));
+
+        if (bookRoom.equalsIgnoreCase("Y")) {
+            String customerEmail = checkAccount();
+
+            if (!customerEmail.isEmpty()) {
+                String roomId = getRoomNumber(available);
+                if (!roomId.isEmpty()) {
+                    return HotelResource.bookARoom(customerEmail,
+                            HotelResource.getRoom(roomId), checkIn, checkOut);
+                }
+            }
+        }
+        return null;
+    }
+
+    public String checkAccount() {
+        do {
+            System.out.println("Do you have an account with us? Y/N");
+            String hasAccount = scanner.nextLine();
+
+            if (hasAccount.equalsIgnoreCase("Y")) {
+                System.out.println("Enter email: (Format: username@domain.com)");
+                String accountEmail = scanner.nextLine();
+                if (AdminResource.getCustomer(accountEmail) != null) {
+                    return accountEmail;
+                } else {
+                    System.out.println("That account is not in our system.\n");
+                }
+            } else if (hasAccount.equalsIgnoreCase("N")) {
+                System.out.println("Please return to Main Menu and create an account first.");
+                return "";
+            }
+        } while (true);
+    }
+
+    public String getRoomNumber(List<IRoom> availableRooms) {
+        do {
+            System.out.println("Enter the room number that you would like to reserve: ");
+            String roomNumber = scanner.nextLine();
+
+            boolean isValidRoom = checkRoomAvailable(roomNumber, availableRooms);
+
+            if (!isValidRoom) {
+                System.out.println("The room number you entered is not available.\n");
+                System.out.println("Would you like to reserve another room? Y/N");
+                String reserveRoom = scanner.nextLine();
+
+                if (reserveRoom.equalsIgnoreCase("N")) {
+                    return "";
+                } else if (!reserveRoom.equalsIgnoreCase(("Y"))) {
+                    System.out.println("That is not a valid input.\n");
+                }
+            } else {
+                return roomNumber;
+            }
+        } while (true);
+    }
+
+    public boolean checkRoomAvailable(String roomId, List<IRoom> availableRooms) {
+        for (IRoom room : availableRooms) {
+            if (room.getRoomNumber().equals(roomId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Date getDate(String message) {
@@ -124,6 +205,7 @@ public class MainMenu {
 
     public void printAvailableRooms(List<IRoom> availableRooms) {
         availableRooms.forEach(System.out::println);
+        System.out.println();
     }
 
     public String formatDateString(Date date) {
