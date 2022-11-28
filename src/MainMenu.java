@@ -74,22 +74,13 @@ public class MainMenu {
         availableRooms = findAvailableRooms(checkIn, checkOut);
 
         // If no available rooms for the specified dates,
+        if (availableRooms.isEmpty()) {
+            availableRooms = checkAlternateDates(checkIn, checkOut, DAYSOUT);
+        }
+
         if (!availableRooms.isEmpty()) {
             printAvailableRooms(availableRooms);
-        } else {
-            System.out.println("There are no rooms available for the specified dates.\n");
-            System.out.println("Checking for available rooms 7 days for your specified dates.");
-            checkIn = setNewDate(checkIn, DAYSOUT);
-            checkOut = setNewDate(checkOut, DAYSOUT);
-            availableRooms = findAvailableRooms(checkIn, checkOut);
-            if (availableRooms.isEmpty()) {
-                System.out.println("Unfortunately there are no available rooms for these dates, either.");
-            } else {
-                System.out.println("\nNew check-in date: " + formatDateString(checkIn) +
-                        " / New check-out date: " + formatDateString(checkOut));
-                System.out.println("Availabe Rooms:");
-                printAvailableRooms(availableRooms);
-            }
+
         }
 
         System.out.println();
@@ -125,18 +116,14 @@ public class MainMenu {
         return dateOut.after(dateIn);
     }
 
-
     // Find available rooms based on check-in/check-out dates
     public List<IRoom> findAvailableRooms(Date in, Date out) {
 
         return new ArrayList<>(HotelResource.findARoom(in, out));
     }
 
-    public Date setNewDate(Date date, Integer addDays) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, addDays);
-        return calendar.getTime();
+    public void printAvailableRooms(List<IRoom> availableRooms) {
+        availableRooms.forEach(System.out::println);
     }
 
     public String formatDateString(Date date) {
@@ -144,8 +131,30 @@ public class MainMenu {
         return DATE_FORMAT.format(date);
     }
 
-    public void printAvailableRooms(List<IRoom> availableRooms) {
-        availableRooms.forEach(System.out::println);
+    public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
+        System.out.println("There are no rooms available for the specified dates.\n");
+        System.out.println("Checking for available rooms 7 days for your specified dates.");
+
+        dateIn = setNewDate(dateIn, daysToAdd);
+        dateOut = setNewDate(dateOut, daysToAdd);
+
+        List<IRoom> availableRooms = findAvailableRooms(dateIn, dateOut);
+
+        if (availableRooms.isEmpty()) {
+            System.out.println("Unfortunately there are no available rooms for these dates, either.");
+        } else {
+            System.out.println("\nNew check-in date: " + formatDateString(dateIn) +
+                    " / New check-out date: " + formatDateString(dateOut));
+        }
+
+        return availableRooms;
+    }
+
+    public Date setNewDate(Date date, Integer addDays) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, addDays);
+        return calendar.getTime();
     }
 
 //    Option 2: See my reservations --------------------------------------------
