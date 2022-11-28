@@ -94,11 +94,11 @@ public class ReservationService {
             Date reservationIn = reservation.getCheckInDate();
             Date reservationOut = reservation.getCheckOutDate();
 
-            if (checkIn.after(reservationIn) && checkIn.before(reservationOut))
-                return false;
-            if (checkOut.after(reservationIn) && checkOut.before(reservationOut))
-                return false;
             if (reservationIn.before(checkIn) && reservationOut.after(checkOut))
+                return false;
+            if (reservationIn.after(checkIn) && reservationIn.before(checkOut))
+                return false;
+            if (reservationOut.after(checkIn) && reservationOut.before(checkOut))
                 return false;
         }
         return true;
