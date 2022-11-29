@@ -144,7 +144,7 @@ public class AdminMenu {
 
         inputString = inputString.replace("\\s", "");
 
-        Integer r;
+        int r;
 
         try {
             r = Integer.parseInt(inputString);
@@ -178,7 +178,7 @@ public class AdminMenu {
 
     public Double getPrice(String message) {
 
-        Double roomPrice = 0.0;
+        double roomPrice = 0.0;
         boolean isValidPrice = false;
 
         do {
@@ -201,7 +201,7 @@ public class AdminMenu {
 
         inputString = inputString.replace("\\s", "");
 
-        Double d;
+        double d;
 
         try {
             d = Double.parseDouble(inputString);
