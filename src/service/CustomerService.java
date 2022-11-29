@@ -20,7 +20,6 @@ public class CustomerService {
         }
     }
 
-    // TODO refactor CustomerService.getCustomer
     public static Customer getCustomer(String customerEmail) {
         if (customerEmail != null && !customerEmail.equals("")) {
             return allCustomers.get(customerEmail);
@@ -29,7 +28,6 @@ public class CustomerService {
         return null;
     }
 
-    // TODO revisit Customer.getAllCustomers
     public static Collection<Customer> getAllCustomers() {
         return allCustomers.values();
     }

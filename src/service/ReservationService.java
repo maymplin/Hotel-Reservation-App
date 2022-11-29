@@ -106,7 +106,10 @@ public class ReservationService {
 
     public static Collection<Reservation> getCustomerReservation(Customer customer) {
 
-        return customerReservations.get(customer.getEmail());
+        if (customerReservations.containsKey(customer.getEmail())) {
+            return customerReservations.get(customer.getEmail());
+        }
+        return new ArrayList<Reservation>();
     }
 
     public static void printAllReservation() {

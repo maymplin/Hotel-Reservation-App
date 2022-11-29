@@ -266,7 +266,6 @@ public class MainMenu {
             System.out.println("You do not have an account with us.");
         } else {
             List<Reservation> reservations = new ArrayList<>(HotelResource.getCustomersReservations(customerEmail));
-
             if (reservations.isEmpty()) {
                 System.out.println("You do not have any reservations with us.");
             } else {
