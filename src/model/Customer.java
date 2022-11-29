@@ -4,8 +4,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Customer {
-    private String firstname;
-    private String lastName;
+    private final String firstname;
+    private final String lastName;
     private String email;
 
     private static final String emailRegex = "^(.+)@(.+).com$";
@@ -29,16 +29,8 @@ public class Customer {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
