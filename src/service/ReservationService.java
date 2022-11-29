@@ -28,7 +28,7 @@ public class ReservationService {
 
     // TODO refactor ReservationService.getARoom
     public static IRoom getARoom (String roomId) {
-        if (roomId != null && roomId != "") {
+        if (roomId != null && !roomId.equals("")) {
             return allRooms.get(roomId);
         }
         return null;
@@ -109,7 +109,7 @@ public class ReservationService {
         if (customerReservations.containsKey(customer.getEmail())) {
             return customerReservations.get(customer.getEmail());
         }
-        return new ArrayList<Reservation>();
+        return new ArrayList<>();
     }
 
     public static void printAllReservation() {
