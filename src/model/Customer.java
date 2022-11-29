@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Customer {
@@ -10,15 +11,12 @@ public class Customer {
     private static final String emailRegex = "^(.+)@(.+).com$";
     private static final Pattern pattern = Pattern.compile(emailRegex);
 
-    // TODO write Customer constructor
-
     public Customer(String firstname, String lastName, String email) {
         this.firstname = firstname;
         this.lastName = lastName;
         validateEmail(email);
     }
 
-    // TODO double-check Customer.validateEmail fits with project spec
     public void validateEmail(String email) {
         if (!pattern.matcher(email).matches()) {
             throw new IllegalArgumentException("Error, invalid email");
@@ -49,6 +47,19 @@ public class Customer {
 
     private void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return getEmail().equals(customer.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail());
     }
 
     @Override

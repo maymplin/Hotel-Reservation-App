@@ -1,12 +1,13 @@
 package model;
 
+import java.util.Objects;
+
 public class Room implements IRoom {
 
     private String roomNumber;
     private Double price;
     private RoomType roomType;
 
-    // TODO write a Room constructor
     public Room(String roomNumber, Double price, RoomType roomType) {
         this.roomNumber = roomNumber;
         this.price = price;
@@ -49,7 +50,18 @@ public class Room implements IRoom {
         return getRoomPrice() == 0;
     }
 
-    // TODO re-write Room.toString()
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return getRoomNumber().equals(room.getRoomNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRoomNumber());
+    }
 
     @Override
     public String toString() {

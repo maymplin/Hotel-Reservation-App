@@ -52,8 +52,6 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
     }
 
-    // TODO re-write Reservation.toString
-
     @Override
     public String toString() {
         String dateIn = DATE_FORMAT.format(checkInDate);

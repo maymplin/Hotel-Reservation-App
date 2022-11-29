@@ -26,7 +26,6 @@ public class ReservationService {
         }
     }
 
-    // TODO refactor ReservationService.getARoom
     public static IRoom getARoom (String roomId) {
         if (roomId != null && !roomId.equals("")) {
             return allRooms.get(roomId);
@@ -34,7 +33,6 @@ public class ReservationService {
         return null;
     }
 
-    // TODO refactor ReservationService.reserveARoom
     public static Reservation reserveARoom(Customer customer, IRoom room,
                                     Date checkInDate, Date checkOutDate) {
 
@@ -66,9 +64,9 @@ public class ReservationService {
         sortReservations(customerReservations.get(customerEmail));
     }
 
-    public static void sortReservations(List<Reservation> reservations) {
+    static void sortReservations(List<Reservation> reservations) {
         reservations.sort((o1, o2)
-                -> o1.getCheckInDate().compareTo(o2.getCheckInDate()));
+                -> o1.getRoom().getRoomNumber().compareTo(o2.getRoom().getRoomNumber()));
     }
 
     public static Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {

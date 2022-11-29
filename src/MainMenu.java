@@ -54,8 +54,6 @@ public class MainMenu {
 
 //    Option 1: Find and reserve a room ----------------------------------------
 
-    // TODO complete find and reserve a room functionality
-
     public void findAndReserveARoom() {
 
         Date checkIn;

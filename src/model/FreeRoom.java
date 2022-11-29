@@ -6,7 +6,6 @@ public class FreeRoom extends Room {
         super(roomNumber, 0.0, roomType);
     }
 
-    // TODO re-write FreeRoom.toString()
     @Override
     public String toString() {
         return "FreeRoom{" +
