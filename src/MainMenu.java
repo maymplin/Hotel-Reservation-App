@@ -15,22 +15,6 @@ public class MainMenu {
 
     }
 
-    public void printMainMenu() {
-        System.out.println("Welcome to the Hotel Reservation Application\n");
-        printDivider();
-        System.out.println("1. Find and reserve a room");
-        System.out.println("2. See my reservations");
-        System.out.println("3. Create an account");
-        System.out.println("4. Admin");
-        System.out.println("5. Exit");
-        printDivider();
-        System.out.println("Please select a number for the menu option");
-    }
-
-    public void printDivider() {
-        System.out.println("---------------------------------------------");
-    }
-
     public void enterMainMenu() {
 
         String userChoice = "";
@@ -50,6 +34,22 @@ public class MainMenu {
         } while (!userChoice.equals("5"));
 
         scanner.close();
+    }
+
+    public void printMainMenu() {
+        System.out.println("Welcome to the Hotel Reservation Application\n");
+        printDivider();
+        System.out.println("1. Find and reserve a room");
+        System.out.println("2. See my reservations");
+        System.out.println("3. Create an account");
+        System.out.println("4. Admin");
+        System.out.println("5. Exit");
+        printDivider();
+        System.out.println("Please select a number for the menu option");
+    }
+
+    public void printDivider() {
+        System.out.println("---------------------------------------------");
     }
 
 //    Option 1: Find and reserve a room ----------------------------------------
@@ -184,8 +184,8 @@ public class MainMenu {
         do {
             System.out.println("Would you like to book a room? Y/N");
             bookRoom = scanner.nextLine();
-        } while (bookRoom == null || (bookRoom.equalsIgnoreCase("Y") &&
-                bookRoom.equalsIgnoreCase("N")));
+        } while (bookRoom == null || (!bookRoom.equalsIgnoreCase("Y") &&
+                !bookRoom.equalsIgnoreCase("N")));
 
         if (bookRoom.equalsIgnoreCase("Y")) {
             String customerEmail = checkAccount();
