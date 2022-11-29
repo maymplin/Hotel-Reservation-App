@@ -54,6 +54,8 @@ public class MainMenu {
 
 //    Option 1: Find and reserve a room ----------------------------------------
 
+    // Prompt for check-in/checkout dates, validate dates, print available
+    // rooms, and prompt for user for reservation
     public void findAndReserveARoom() {
 
         Date checkIn;
@@ -62,7 +64,6 @@ public class MainMenu {
 
         List<IRoom> availableRooms;
 
-        // Prompt for check-in/checkout dates and print all available rooms
         checkIn = getDate("Enter check-in date - mm/dd/yyyy. (E.g. 02/01/2020)");
 
         if(!validateCheckInNotBeforeToday(checkIn)) {
@@ -79,7 +80,9 @@ public class MainMenu {
 
         availableRooms = findAvailableRooms(checkIn, checkOut);
 
-        // If no available rooms for the specified dates,
+        // If no available rooms for the specified dates, add 7 days to
+        // check-in and check-out dates and search for availability
+
         if (availableRooms.isEmpty()) {
             availableRooms = checkAlternateDates(checkIn, checkOut, DAYSOUT);
         }
@@ -95,6 +98,10 @@ public class MainMenu {
 
         System.out.println();
     }
+
+    // getDate(), parseDateString(), validateCheckInNotBeforeToday(), and
+    // validateCheckInBeforeCheckOut() get check-in and check-out dates from
+    // user and validate that they are valid
 
     public Date getDate(String message) {
         String userInput;
@@ -128,12 +135,10 @@ public class MainMenu {
         return dateIn.after(yesterday);
     }
 
-    // Verify that check-out date is after check-in date
     public boolean validateCheckInBeforeCheckOut(Date dateIn, Date dateOut) {
         return dateOut.after(dateIn);
     }
 
-    // Find available rooms based on check-in/check-out dates
     public List<IRoom> findAvailableRooms(Date in, Date out) {
 
         return new ArrayList<>(HotelResource.findARoom(in, out));
@@ -144,10 +149,9 @@ public class MainMenu {
         System.out.println();
     }
 
-    public String formatDateString(Date date) {
-        final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEE. MMM dd, yyyy");
-        return DATE_FORMAT.format(date);
-    }
+    // checkAlternateDates() and SewNewDate() facilitate the search of
+    // available rooms if original check-in/check-outs yield no available rooms
+    // for reservation
 
     public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
         System.out.println("There are no rooms available for the specified dates.\n");
@@ -168,12 +172,20 @@ public class MainMenu {
         return availableRooms;
     }
 
+    public String formatDateString(Date date) {
+        final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("EEE. MMM dd, yyyy");
+        return DATE_FORMAT.format(date);
+    }
+
     public Date setNewDate(Date date, Integer addDays) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, addDays);
         return calendar.getTime();
     }
+
+    // reserveARoom(), checkAccount(), getRoomNumber() and checkRoomAvailable()
+    // facilitate reservation of an available room
 
     public Reservation reserveARoom(List<IRoom> available, Date checkIn, Date checkOut) {
 
