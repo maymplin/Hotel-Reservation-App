@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class HotelReservationApplication {
+public class HotelApplication {
 
     public static void main(String[] args) {
 
