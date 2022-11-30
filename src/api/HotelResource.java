@@ -12,17 +12,18 @@ import java.util.Date;
 public class HotelResource {
 
     private static final ReservationService reservationService = ReservationService.getInstance();
+    private static final CustomerService customerService = CustomerService.getInstance();
 
     public HotelResource() {
     }
 
     public static Customer getCustomer(String email) {
-        return CustomerService.getCustomer(email);
+        return customerService.getCustomer(email);
     }
 
     public static void createACustomer(String email, String firstName, String lastName) {
         try {
-            CustomerService.addCustomer(email, firstName, lastName);
+            customerService.addCustomer(email, firstName, lastName);
             System.out.println("Account added successfully.");
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getLocalizedMessage());

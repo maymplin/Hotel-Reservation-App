@@ -12,12 +12,13 @@ import java.util.List;
 public class AdminResource {
 
     private static final ReservationService reservationService = ReservationService.getInstance();
+    private static final CustomerService customerService = CustomerService.getInstance();
 
     public AdminResource() {
     }
 
     public static Customer getCustomer(String email) {
-        return CustomerService.getCustomer(email);
+        return customerService.getCustomer(email);
     }
 
     public static void addRoom(List<IRoom> rooms) {
@@ -32,7 +33,7 @@ public class AdminResource {
     }
 
     public static Collection<Customer> getCustomers() {
-        return CustomerService.getAllCustomers();
+        return customerService.getAllCustomers();
     }
 
     public static void displayAllReservations() {

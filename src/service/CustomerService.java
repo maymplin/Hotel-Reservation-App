@@ -6,12 +6,20 @@ import java.util.*;
 
 public class CustomerService {
 
+    private static CustomerService INSTANCE;
     private static final Map<String, Customer> allCustomers = new HashMap<>();
 
     public CustomerService() {
     }
 
-    public static void addCustomer(String email, String firstName, String lastName) {
+    public static CustomerService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new CustomerService();
+        }
+        return INSTANCE;
+    }
+
+    public void addCustomer(String email, String firstName, String lastName) {
         if (allCustomers.containsKey(email)) {
             throw new IllegalArgumentException("This account already exists.");
         } else {
@@ -20,7 +28,7 @@ public class CustomerService {
         }
     }
 
-    public static Customer getCustomer(String customerEmail) {
+    public Customer getCustomer(String customerEmail) {
         if (customerEmail != null && !customerEmail.equals("")) {
             return allCustomers.get(customerEmail);
         }
@@ -28,7 +36,7 @@ public class CustomerService {
         return null;
     }
 
-    public static Collection<Customer> getAllCustomers() {
+    public Collection<Customer> getAllCustomers() {
         return allCustomers.values();
     }
 }
