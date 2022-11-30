@@ -11,6 +11,8 @@ import java.util.List;
 
 public class AdminResource {
 
+    private static final ReservationService reservationService = ReservationService.getInstance();
+
     public AdminResource() {
     }
 
@@ -20,13 +22,13 @@ public class AdminResource {
 
     public static void addRoom(List<IRoom> rooms) {
         for (IRoom room : rooms) {
-            ReservationService.addRoom(room);
+            reservationService.addRoom(room);
         }
     }
 
     public static Collection<IRoom> getAllRooms() {
 
-        return new ArrayList<>(ReservationService.getAllRooms().values());
+        return new ArrayList<>(reservationService.getAllRooms().values());
     }
 
     public static Collection<Customer> getCustomers() {
@@ -34,6 +36,6 @@ public class AdminResource {
     }
 
     public static void displayAllReservations() {
-        ReservationService.printAllReservation();
+        reservationService.printAllReservation();
     }
 }

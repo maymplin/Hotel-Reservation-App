@@ -20,6 +20,8 @@ public class HotelApplication {
 
     public static void addTestData() {
 
+        final ReservationService reservationService = ReservationService.getInstance();
+
         // add customers
         CustomerService.addCustomer("tseliot@fourquartets.com", "T.H.", "Eliot");
         CustomerService.addCustomer("esatie@gymnopedies.com", "Erik", "Satie");
@@ -41,46 +43,46 @@ public class HotelApplication {
                 List.of(room101, room102, room103, room201, room202, room203)
         );
 
-        rooms.forEach(ReservationService::addRoom);
+        rooms.forEach(room -> reservationService.addRoom(room));
 
         // Create reservations
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("tseliot@fourquartets.com"),
                 room101,
                 new Date(2022-1900, Calendar.NOVEMBER, 26),
                 new Date(2022-1900, Calendar.NOVEMBER, 30)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("tseliot@fourquartets.com"),
                 room202,
                 new Date(2023-1900, Calendar.JANUARY, 6),
                 new Date(2023-1900, Calendar.JANUARY, 10)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("esatie@gymnopedies.com"),
                 room102,
                 new Date(2022-1900, Calendar.DECEMBER, 27),
                 new Date(2023-1900, Calendar.JANUARY, 5)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("brussell@logic.com"),
                 room103,
                 new Date(2022-1900, Calendar.DECEMBER, 15),
                 new Date(2022-1900, Calendar.DECEMBER, 19)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("mcurie@radiation.com"),
                 room201,
                 new Date(2022-1900, Calendar.NOVEMBER, 29),
                 new Date(2022-1900, Calendar.DECEMBER, 7)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("jlocke@empiricism.com"),
                 room202,
                 new Date(2022-1900, Calendar.DECEMBER, 31),
                 new Date(2023-1900, Calendar.JANUARY, 3)
         );
-        ReservationService.reserveARoom(
+        reservationService.reserveARoom(
                 CustomerService.getCustomer("ghhardy@maths.com"),
                 room203,
                 new Date(2022-1900, Calendar.DECEMBER, 3),

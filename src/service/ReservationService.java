@@ -9,6 +9,7 @@ import java.util.*;
 
 public class ReservationService {
 
+    private static ReservationService INSTANCE;
     private static final Map<String, IRoom> allRooms = new HashMap<>();
     private static final Map<String, List<Reservation>> allReservations = new HashMap<>();
     private static final Map<String, List<Reservation>> customerReservations = new HashMap<>();
@@ -16,24 +17,31 @@ public class ReservationService {
     public ReservationService() {
     }
 
-    public static Map<String, IRoom> getAllRooms() {
-             return allRooms;
+    public static ReservationService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ReservationService();
+        }
+        return INSTANCE;
     }
 
-    public static void addRoom(IRoom room) {
+    public Map<String, IRoom> getAllRooms() {
+        return allRooms;
+    }
+
+    public void addRoom(IRoom room) {
         if (room != null) {
             allRooms.put(room.getRoomNumber(), room);
         }
     }
 
-    public static IRoom getARoom (String roomId) {
+    public IRoom getARoom (String roomId) {
         if (roomId != null && !roomId.equals("")) {
             return allRooms.get(roomId);
         }
         return null;
     }
 
-    public static Reservation reserveARoom(Customer customer, IRoom room,
+    public Reservation reserveARoom(Customer customer, IRoom room,
                                     Date checkInDate, Date checkOutDate) {
 
         if (customer != null && room != null && checkInDate != null & checkOutDate != null) {
@@ -42,7 +50,7 @@ public class ReservationService {
             String roomId = room.getRoomNumber();
 
             if (!allReservations.containsKey(roomId)) {
-                allReservations.put(roomId, new ArrayList());
+                allReservations.put(roomId, new ArrayList<>());
             }
 
             allReservations.get(roomId).add(newReservation);
@@ -56,20 +64,20 @@ public class ReservationService {
         return null;
     }
 
-    public static void addCustomerReservation(Reservation reservation, String customerEmail) {
+    public void addCustomerReservation(Reservation reservation, String customerEmail) {
         if (!customerReservations.containsKey(customerEmail)) {
-            customerReservations.put(customerEmail, new ArrayList());
+            customerReservations.put(customerEmail, new ArrayList<>());
         }
         customerReservations.get(customerEmail).add(reservation);
         sortReservations(customerReservations.get(customerEmail));
     }
 
-    static void sortReservations(List<Reservation> reservations) {
+    private void sortReservations(List<Reservation> reservations) {
         reservations.sort((o1, o2)
                 -> o1.getRoom().getRoomNumber().compareTo(o2.getRoom().getRoomNumber()));
     }
 
-    public static Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         List<IRoom> availableRooms = new ArrayList<>();
 
         for (String roomId : allRooms.keySet()) {
@@ -85,7 +93,7 @@ public class ReservationService {
         return availableRooms;
     }
 
-    public static boolean checkAvailability(String roomId, Date checkIn, Date checkOut) {
+    public boolean checkAvailability(String roomId, Date checkIn, Date checkOut) {
         List<Reservation> currentReservations = new ArrayList<>(allReservations.get(roomId));
 
         for (Reservation reservation : currentReservations) {
@@ -102,7 +110,7 @@ public class ReservationService {
         return true;
     }
 
-    public static Collection<Reservation> getCustomerReservation(Customer customer) {
+    public Collection<Reservation> getCustomerReservation(Customer customer) {
 
         if (customerReservations.containsKey(customer.getEmail())) {
             return customerReservations.get(customer.getEmail());
@@ -110,7 +118,7 @@ public class ReservationService {
         return new ArrayList<>();
     }
 
-    public static void printAllReservation() {
+    public void printAllReservation() {
         if (!allReservations.isEmpty()) {
             allReservations.forEach((key, value) -> {
                 for (Reservation v : value) {

@@ -11,6 +11,8 @@ import java.util.Date;
 
 public class HotelResource {
 
+    private static final ReservationService reservationService = ReservationService.getInstance();
+
     public HotelResource() {
     }
 
@@ -28,19 +30,19 @@ public class HotelResource {
     }
 
     public static IRoom getRoom(String roomNumber) {
-        return ReservationService.getARoom(roomNumber);
+        return reservationService.getARoom(roomNumber);
     }
 
     public static Reservation bookARoom(String customerEmail, IRoom room,
                                  Date CheckInDate, Date CheckOutDate) {
-        return ReservationService.reserveARoom(getCustomer(customerEmail), room, CheckInDate, CheckOutDate);
+        return reservationService.reserveARoom(getCustomer(customerEmail), room, CheckInDate, CheckOutDate);
     }
 
     public static Collection<Reservation> getCustomersReservations (String customerEmail) {
-        return ReservationService.getCustomerReservation(getCustomer(customerEmail));
+        return reservationService.getCustomerReservation(getCustomer(customerEmail));
     }
 
     public static Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
-        return ReservationService.findRooms(checkIn, checkOut);
+        return reservationService.findRooms(checkIn, checkOut);
     }
 }
