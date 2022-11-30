@@ -4,8 +4,8 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
-
 import java.util.*;
+
 
 public class ReservationService {
 
@@ -105,6 +105,8 @@ public class ReservationService {
             if (reservationIn.after(checkIn) && reservationIn.before(checkOut))
                 return false;
             if (reservationOut.after(checkIn) && reservationOut.before(checkOut))
+                return false;
+            if (reservationIn.equals(checkIn) && reservationOut.equals(checkOut))
                 return false;
         }
         return true;
