@@ -64,7 +64,7 @@ public class ReservationService {
         return null;
     }
 
-    public void addCustomerReservation(Reservation reservation, String customerEmail) {
+    void addCustomerReservation(Reservation reservation, String customerEmail) {
         if (!customerReservations.containsKey(customerEmail)) {
             customerReservations.put(customerEmail, new ArrayList<>());
         }
