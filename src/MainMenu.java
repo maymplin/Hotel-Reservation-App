@@ -155,7 +155,7 @@ public class MainMenu {
 
     public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
         System.out.println("There are no rooms available for the specified dates.\n");
-        System.out.println("Checking for available rooms 7 days for your specified dates.");
+        System.out.println("Checking for available rooms 7 days after your specified dates.");
 
         dateIn = setNewDate(dateIn, daysToAdd);
         dateOut = setNewDate(dateOut, daysToAdd);

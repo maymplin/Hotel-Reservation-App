@@ -9,7 +9,7 @@ public class CustomerService {
     private static CustomerService INSTANCE;
     private static final Map<String, Customer> allCustomers = new HashMap<>();
 
-    public CustomerService() {
+    private CustomerService() {
     }
 
     public static CustomerService getInstance() {

@@ -14,7 +14,7 @@ public class ReservationService {
     private static final Map<String, List<Reservation>> allReservations = new HashMap<>();
     private static final Map<String, List<Reservation>> customerReservations = new HashMap<>();
 
-    public ReservationService() {
+    private ReservationService() {
     }
 
     public static ReservationService getInstance() {
