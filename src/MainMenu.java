@@ -171,7 +171,7 @@ public class MainMenu {
         List<IRoom> availableRooms = findAvailableRooms(dateIn, dateOut);
 
         if (availableRooms.isEmpty()) {
-            System.out.println("Unfortunately there are no available rooms for these dates, either.");
+            System.out.println("\nUnfortunately there are no available rooms for these dates, either.");
         } else {
             System.out.println("\nNew check-in date: " + formatDateString(dateIn) +
                     " / New check-out date: " + formatDateString(dateOut));

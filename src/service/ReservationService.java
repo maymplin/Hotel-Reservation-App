@@ -11,7 +11,7 @@ public class ReservationService {
 
     private static ReservationService INSTANCE;
     private static final Map<String, IRoom> allRooms = new HashMap<>();
-    private static final Map<String, List<Reservation>> allReservations = new HashMap<>();
+    private static final Map<String, Set<Reservation>> allReservations = new HashMap<>();
     private static final Map<String, List<Reservation>> customerReservations = new HashMap<>();
 
     private ReservationService() {
@@ -50,13 +50,13 @@ public class ReservationService {
             String roomId = room.getRoomNumber();
 
             if (!allReservations.containsKey(roomId)) {
-                allReservations.put(roomId, new ArrayList<>());
+                allReservations.put(roomId, new HashSet<>());
             }
 
             allReservations.get(roomId).add(newReservation);
-            sortReservations(allReservations.get(roomId));
 
             addCustomerReservation(newReservation, customer.getEmail());
+            sortReservations(customerReservations.get(customer.getEmail()));
 
             return newReservation;
         }
