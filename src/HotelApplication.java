@@ -49,8 +49,8 @@ public class HotelApplication {
         reservationService.reserveARoom(
                 customerService.getCustomer("tseliot@fourquartets.com"),
                 room101,
-                new Date(2022-1900, Calendar.NOVEMBER, 26),
-                new Date(2022-1900, Calendar.NOVEMBER, 30)
+                new Date(2022-1900, Calendar.NOVEMBER, 30),
+                new Date(2022-1900, Calendar.DECEMBER, 7)
         );
         reservationService.reserveARoom(
                 customerService.getCustomer("tseliot@fourquartets.com"),
@@ -73,8 +73,8 @@ public class HotelApplication {
         reservationService.reserveARoom(
                 customerService.getCustomer("mcurie@radiation.com"),
                 room201,
-                new Date(2022-1900, Calendar.NOVEMBER, 29),
-                new Date(2022-1900, Calendar.DECEMBER, 7)
+                new Date(2022-1900, Calendar.DECEMBER, 2),
+                new Date(2022-1900, Calendar.DECEMBER, 15)
         );
         reservationService.reserveARoom(
                 customerService.getCustomer("jlocke@empiricism.com"),

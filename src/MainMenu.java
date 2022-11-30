@@ -84,6 +84,10 @@ public class MainMenu {
         // check-in and check-out dates and search for availability
 
         if (availableRooms.isEmpty()) {
+            List<Date> newDates = provideAlternateDates(checkIn, checkOut, DAYSOUT);
+            checkIn = newDates.get(0);
+            checkOut = newDates.get(1);
+
             availableRooms = checkAlternateDates(checkIn, checkOut, DAYSOUT);
         }
 
@@ -153,12 +157,16 @@ public class MainMenu {
     // available rooms if original check-in/check-outs yield no available rooms
     // for reservation
 
-    public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
-        System.out.println("There are no rooms available for the specified dates.\n");
-        System.out.println("Checking for available rooms 7 days after your specified dates.");
-
+    public List<Date> provideAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
         dateIn = setNewDate(dateIn, daysToAdd);
         dateOut = setNewDate(dateOut, daysToAdd);
+
+        return new ArrayList<>(List.of(dateIn, dateOut));
+    }
+
+    public List<IRoom> checkAlternateDates(Date dateIn, Date dateOut, Integer daysToAdd) {
+        System.out.println("There are no rooms available for the specified dates.\n");
+        System.out.println("Checking for available rooms " + daysToAdd + " days after your specified dates.");
 
         List<IRoom> availableRooms = findAvailableRooms(dateIn, dateOut);
 
